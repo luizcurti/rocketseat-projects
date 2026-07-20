@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: desafio-api
+data:
+  PORT: "3000"
+  DB_HOST: postgres-service.desafio-db.svc.cluster.local
+  DB_PORT: "5432"
+  DB_NAME: app_db
+  DB_USER: app_user
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-secret
+  namespace: desafio-api
+type: Opaque
+stringData:
+  DB_PASSWORD: app_password

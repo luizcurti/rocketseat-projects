@@ -1,0 +1,45 @@
+DESAFIO DEVOPS - RESUMO EXECUTIVO
+
+Empresa: Tech
+Objetivo: Aplicar CALMS e Três Maneiras para reduzir falhas, acelerar entregas e aumentar colaboração.
+
+1) DIAGNOSTICO (C de CALMS)
+- Processo atual: deploy manual, testes manuais em produção, monitoramento manual.
+- Problemas: handoff entre equipes, alto erro operacional, feedback tardio.
+- Baseline:
+  * Lead time: 2 dias
+  * Sucesso deploy: 80%
+  * Incidentes: 2/semana
+  * MTTR: 4h
+
+2) AUTOMACAO (A de CALMS)
+- Implementar CI/CD com:
+  * Build e testes automáticos
+  * Quality gate e segurança
+  * Deploy automático em homologação
+  * Aprovação e deploy seguro em produção
+  * Rollback automatizado
+
+3) MENSURACAO E COMPARTILHAMENTO (M e S)
+- Metas em 90 dias:
+  * Lead time: 2 dias -> 4h
+  * Falha de mudança: 20% -> 5%
+  * MTTR: 4h -> 30min
+  * Incidentes: 2/semana -> 0,5/semana
+- Ações culturais:
+  * Post-mortem sem culpa
+  * Runbooks e documentação viva
+  * Comunidade DevOps quinzenal
+
+4) TRES MANEIRAS
+- Fluxo: reduzir handoffs e padronizar deploy.
+- Feedback: dashboards e alertas em tempo real.
+- Aprendizado: experimentação controlada e melhoria contínua.
+
+5) ROADMAP (90 DIAS)
+- 0-30: CI e métricas base.
+- 31-60: deploy em homologação + observabilidade.
+- 61-90: deploy seguro em produção + expansão ao legado.
+
+RESULTADO ESPERADO
+Maior velocidade com qualidade, menos incidentes e colaboração real entre Dev e Ops.

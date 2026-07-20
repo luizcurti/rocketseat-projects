@@ -1,0 +1,14 @@
+{
+  "name": "docker-multicontainer-app",
+  "version": "1.0.0",
+  "description": "Aplicacao Node.js com Express e PostgreSQL em ambiente Docker multi-container",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "pg": "^8.16.3"
+  }
+}

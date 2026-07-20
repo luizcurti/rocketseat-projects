@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+# Simple bootstrap for demo purposes. Replace by your app bootstrap script.
+yum update -y
+yum install -y nginx
+
+cat <<'EOF' >/usr/share/nginx/html/index.html
+<html>
+  <head><title>${environment}</title></head>
+  <body>
+    <h1>Environment: ${environment}</h1>
+    <p>Application running on port ${app_port}</p>
+  </body>
+</html>
+EOF
+
+systemctl enable nginx
+systemctl restart nginx
