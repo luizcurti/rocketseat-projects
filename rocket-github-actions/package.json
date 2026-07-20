@@ -1,0 +1,19 @@
+{
+  "name": "github-actions-apprunner-cicd",
+  "version": "1.0.0",
+  "description": "Exemplo de app para pipeline CI/CD com GitHub Actions e AWS App Runner",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.1"
+  }
+}
