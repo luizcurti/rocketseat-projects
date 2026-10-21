@@ -1,0 +1,275 @@
+{
+  "info": {
+    "name": "FindAFriend API",
+    "_postman_id": "7d4a31f8-6c4e-4c16-b2d3-71ec0b1479a9",
+    "description": "Collection to test the FindAFriend API with a complete ORG and pets flow.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333"
+    },
+    {
+      "key": "orgEmail",
+      "value": "org.test@findafriend.com"
+    },
+    {
+      "key": "orgPassword",
+      "value": "123456"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "petId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Register ORG",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"ORG Friends\",\n  \"email\": \"{{orgEmail}}\",\n  \"password\": \"{{orgPassword}}\",\n  \"address\": \"Flower Street, 100\",\n  \"city\": \"Curitiba\",\n  \"whatsapp\": \"41999999999\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orgs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "orgs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2 - ORG Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{orgEmail}}\",\n  \"password\": \"{{orgPassword}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const json = pm.response.json();",
+              "if (json.token) {",
+              "  pm.collectionVariables.set('token', json.token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "3 - Register Pet (authenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Rex\",\n  \"about\": \"Very friendly dog\",\n  \"age\": \"ADULT\",\n  \"size\": \"MEDIUM\",\n  \"energyLevel\": \"HIGH\",\n  \"independenceLevel\": \"MEDIUM\",\n  \"environment\": \"BOTH\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pets",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4 - List Pets by City",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pets?city=Curitiba",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets"
+          ],
+          "query": [
+            {
+              "key": "city",
+              "value": "Curitiba"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const json = pm.response.json();",
+              "if (json.pets && json.pets.length > 0) {",
+              "  pm.collectionVariables.set('petId', json.pets[0].id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "5 - List Pets with Optional Filters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pets?city=Curitiba&size=MEDIUM&age=ADULT&energyLevel=HIGH&independenceLevel=MEDIUM&environment=BOTH",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets"
+          ],
+          "query": [
+            {
+              "key": "city",
+              "value": "Curitiba"
+            },
+            {
+              "key": "size",
+              "value": "MEDIUM"
+            },
+            {
+              "key": "age",
+              "value": "ADULT"
+            },
+            {
+              "key": "energyLevel",
+              "value": "HIGH"
+            },
+            {
+              "key": "independenceLevel",
+              "value": "MEDIUM"
+            },
+            {
+              "key": "environment",
+              "value": "BOTH"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6 - Pet Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pets/{{petId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets",
+            "{{petId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7 - Negative: Create Pet without Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"NoAuth\",\n  \"about\": \"Test without token\",\n  \"age\": \"ADULT\",\n  \"size\": \"MEDIUM\",\n  \"energyLevel\": \"HIGH\",\n  \"independenceLevel\": \"MEDIUM\",\n  \"environment\": \"BOTH\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pets",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8 - Negative: List without City",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pets",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pets"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
